@@ -6,7 +6,7 @@
 		echo "
 			<script>
 				alert('Data Berhasil Di hapus');
-				window.location.href='index.php';
+				window.location.href='4_5.php';
 			</script>
 		";
 	}else{

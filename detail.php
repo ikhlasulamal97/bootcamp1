@@ -34,7 +34,7 @@
 		</nav>
 		<br><br>
 		<?php 
-			$queri=mysqli_query($konek, "SELECT * FROM image_blog LEFT JOIN user ON image_blog.user_id = user.id_user WHERE image_blog.id_blog = $id_blog  ");
+			$queri=mysqli_query($konek, "SELECT * FROM image_blog LEFT JOIN user ON image_blog.user_id = user.id_user WHERE image_blog.id_blog = $id_blog ");
 
 			$data=mysqli_fetch_array($queri);
 		 ?>
@@ -46,7 +46,7 @@
 		  <li class="list-group-item"><a href="#" class="btn btn-warning btn-sm mr-2" id="ubahblog">Ubah</a> <a href="./hapus.php?id_blog=<?php echo $id_blog ?>" onclick="return confirm('apakah Anda Yakin Akan Menghapus ini ?')" class="btn btn-danger btn-sm">Hapus</a></li>
 		</ul>
 		 <br><br>
-		<a href="./index.php" class="btn btn-info btn-sm">Kembali</a>
+		<a href="./4_5.php" class="btn btn-info btn-sm">Kembali</a>
 
 	<div class="modal fade ubah_blog" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
 	  <div class="modal-dialog">
@@ -78,36 +78,60 @@
 				    	<option value="" selected disabled>Pilih User</option>
 					    <?php 
 					    	$queri=mysqli_query($konek, 'SELECT * FROM USER');
-							while ($data1=mysqli_fetch_array($queri)) {
-							if ($data["id_user"]==$data1['id_user']) {	
+							while ($data=mysqli_fetch_array($queri)) {
 					     ?>
-					      <option value="<?php echo $data1['id_user']; ?>" <?php if ($data["id_user"]==$data1['id_user']) { echo "selected";} ?>><?php echo $data['name']; ?></option>
+					      <option value="<?php echo $data['id_user']; ?>"><?php echo $data['name']; ?></option>
 					    <?php 
-
-					    	}else{
-?>
-
-  			<option value="<?php echo $data1['id_user']; ?>"><?php echo $data['name']; ?></option>
-
-<?php 
-
-					    	}
-
 							}
 					     ?>
-
-
 				    </select>
 				  </div>
 		      </div>
 		      <div class="modal-footer">
-		        <button type="submit" class="btn btn-success btn-sm " name="image_blog">Ubah</button>
+		        <button type="submit" class="btn btn-success btn-sm " name="ubah_image_blog">Ubah</button>
 		      </div>
 	      </form>
 	    </div>
 	  </div>
 	</div>
 
+		<?php 
+		// Ubah Image Blog
+			if (isset($_POST['ubah_image_blog'])) {
+				$title=$_POST['title'];
+				$content=$_POST['content'];
+				$user_id=$_POST['user_id'];
+
+				$gambar=$_FILES['foto']['name'];
+				$simpan_sementara=$_FILES['foto']['tmp_name'];
+				$pecah=explode(".", $gambar);
+				$extensi=strtolower(end($pecah));
+
+				// Membuat Nama Baru Untuk Gambar
+				$angka_rand=rand(1,100);
+				$nama_baru=$pecah[0];
+				$nama_baru .="_";
+				$nama_baru .= $angka_rand;
+				$nama_baru .=".";
+				$nama_baru .= $extensi;
+
+
+					$queri=mysqli_query($konek, "UPDATE image_blog SET title='$title', content='$content', file_image='$nama_baru', user_id='$user_id' WHERE id_blog='$id_blog'");
+					if ($queri) {
+						echo "<script>
+							window.location.href='4_5.php';
+							alert('Data image_blog Berhasil DiUbah');
+						</script>";
+					}else{
+						echo "<script>
+							window.location.href='4_5.php';
+							alert('Data image_blog Gagal DiUbah');
+						</script>";
+					}
+
+			
+			}
+ 		?>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>

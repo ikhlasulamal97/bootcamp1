@@ -146,19 +146,19 @@
 			$email=$_POST['email'];
 			if ($nama=="" || $email=="" ) {
 				echo "<script>
-					window.location.href='index.php';
+					window.location.href='4_5.php';
 					alert('Data Tidak Boleh Kosong');
 				</script>";
 			}else{
 				$queri=mysqli_query($konek, "INSERT INTO user VALUES ('','$nama','$email') ");
 				if ($queri) {
 					echo "<script>
-						window.location.href='index.php';
+						window.location.href='4_5.php';
 						alert('Data User Berhasil Ditambahkan');
 					</script>";
 				}else{
 					echo "<script>
-						window.location.href='index.php';
+						window.location.href='4_5.php';
 						alert('Data User Gagal Ditambahkan');
 					</script>";
 				}
@@ -188,7 +188,7 @@
 
 			if ($title=="" || $content=="" || $gambar==""|| $user_id=="" ) {
 				echo "<script>
-					window.location.href='index.php';
+					window.location.href='4_5.php';
 					alert('Data Tidak Boleh Kosong');
 				</script>";
 			}else{
@@ -196,12 +196,12 @@
 				if ($queri) {
 					move_uploaded_file($simpan_sementara, "$nama_baru");
 					echo "<script>
-						window.location.href='index.php';
+						window.location.href='4_5.php';
 						alert('Data image_blog Berhasil Ditambahkan');
 					</script>";
 				}else{
 					echo "<script>
-						window.location.href='index.php';
+						window.location.href='4_5.php';
 						alert('Data image_blog Gagal Ditambahkan');
 					</script>";
 				}
